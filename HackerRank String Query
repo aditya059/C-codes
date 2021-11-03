@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	// your code goes here
+	int n;
+	cin >> n;
+	string sentence[n];
+	map<string, vector<int>> Map;
+	getline(cin, sentence[0]);
+	for(int i = 0; i < n; i++) {
+	    getline(cin, sentence[i]);
+	    cout << sentence[i] << endl;
+	}
+	for(int i = 0; i < n; i++) {
+	    sentence[i] += " ";
+	    string word = "";
+	    for(int j = 0; j < sentence[i].length(); j++) {
+	        if(sentence[i][j] != ' ') 
+	        word += sentence[i][j];
+	        else {
+	            Map[word].push_back(i);
+	            word = "";
+	        }
+	    }
+	}
+	for(auto iter: Map) {
+	    for(auto it: iter.second)
+	    cout << it << " ";
+	    cout << endl;
+	}
+	int q;
+	cin >> q;
+	vector<vector<int>> ans(q, vector<int>());
+	string queries[n];
+	getline(cin, queries[0]);
+	for(int i = 0; i < n; i++) {
+	    getline(cin, queries[i]);
+	    cout << queries[i] << endl;
+	}
+	for(int i = 0; i < n; i++) {
+	    queries[i] += " ";
+	    string word = "";
+	    for(int j = 0; j < queries[i].length(); j++) {
+	        if(queries[i][j] != ' ') 
+	        word += queries[i][j];
+	        else {
+	            for(int k = 0; k < Map[word].size(); k++) {
+	                
+	            }
+	            word = "";
+	        }
+	    }
+	    ans[i].push_back(temp);
+	}
+	
+	return 0;
+}
