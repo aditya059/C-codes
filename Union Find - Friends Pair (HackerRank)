@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef struct Set {
+    int sz;
+    int parent;
+} Set;
+void makeSet(int V, vector<Set> &DP) {
+    for(int i = 1; i <= V; i++) {
+        DP[i].sz = 1;
+        DP[i].parent = i;
+    }
+}
+int findParent(int u, vector<Set> &DP) {
+    if(u == DP[u].parent) {
+        return u;
+    }
+    DP[u].parent = findParent(DP[u].parent, DP);
+    return DP[u].parent;
+}
+void unionSet(int u, int v, vector<Set> &DP) {
+    int a = findParent(u, DP);
+    int b = findParent(v, DP);
+    if(a == b)
+    return;
+    if(DP[b].sz <= DP[a].sz) {
+        DP[b].parent = DP[a].parent;
+        DP[a].sz += DP[b].sz;
+    }
+    else {
+        DP[a].parent = DP[b].parent;
+        DP[b].sz += DP[a].sz;
+    }
+}
+int main() {
+    
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int N, Q, a, b, type;
+    cin >> N >> Q;
+    vector<Set> DP(N + 1);
+    makeSet(N, DP);
+    for(int i = 0; i < Q; i++) {
+        cin >> type;
+        if(type == 1) {
+            cin >> a >> b;
+            unionSet(a, b, DP);
+        } 
+        else {
+            cin >> a;
+            long long int b = DP[findParent(a, DP)].sz;
+            cout << b * (b - 1) / 2 << endl;
+        }
+    }
+    return 0;
+}
