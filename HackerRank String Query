@@ -2,30 +2,26 @@
 using namespace std;
 
 vector<int> compute(vector<string> &words, map<string, vector<int>> &Map) {
-    map<int, int> freq;
-    for(int i = 0; i < Map[words[0]].size(); i++) {
-        freq[Map[words[0]][i]]++;
+    for(int i = 0; i < words.size(); i++) {
+        cout << words[i] << " ";
     }
+    cout << endl;
+    vector<int> Set1(Map[words[0]].begin(), Map[words[0]].end());
     for(int i = 1; i < words.size(); i++) {
-        map<int, int> freq1;
-        for(int j = 0; j < Map[words[i]].size(); j++) {
-            freq1[Map[words[i]][j]]++;
-        }
-        for(int j = 0; j < Map[words[i]].size(); j++) {
-            freq[Map[words[i]][j]] = min(freq[Map[words[i]][j]], freq1[Map[words[i]][j]]);
+        vector<int> Set2(Map[words[i]].begin(), Map[words[i]].end());
+        vector<int> Set3(Set1.size());
+        vector<int> Set4(Set1.size());
+        auto it = set_difference(Set1.begin(), Set1.end(), Set2.begin(), Set2.end(), Set3.begin());
+        it = set_difference(Set1.begin(), Set1.end(), Set3.begin(), it, Set4.begin());
+        Set1.clear();
+        for(auto iter = Set4.begin(); iter != it; iter++) {
+            Set1.push_back(*iter);
         }
     }
-    vector<int> ans;
-    for(auto iter: freq) {
-        if(iter.second == 0) {
-            vector<int> ans1;
-            ans1.push_back(-1);
-            return ans1;
-        }
-        
-        ans.push_back(iter.first);
+    if(Set1.size() == 0) {
+        Set1.push_back(-1);
     }
-    return ans;
+    return Set1;
 }
 
 int main() {
@@ -37,7 +33,6 @@ int main() {
 	getline(cin, sentence[0]);
 	for(int i = 0; i < n; i++) {
 	    getline(cin, sentence[i]);
-	    cout << sentence[i] << endl;
 	}
 	for(int i = 0; i < n; i++) {
 	    sentence[i] += " ";
@@ -51,24 +46,21 @@ int main() {
 	        }
 	    }
 	}
-	for(auto iter: Map) {
-	    for(auto it: iter.second)
-	    cout << it << " ";
-	    cout << endl;
-	}
 	int q;
 	cin >> q;
 	vector<vector<int>> ans(q, vector<int>());
 	string queries[n];
 	getline(cin, queries[0]);
-	for(int i = 0; i < n; i++) {
+	for(int i = 0; i < q; i++) {
 	    getline(cin, queries[i]);
 	    cout << queries[i] << endl;
 	}
-	for(int i = 0; i < n; i++) {
+	for(int i = 0; i < q; i++) {
+	    cout << queries[i] << endl;
 	    queries[i] += " ";
 	    string word = "";
 	    vector<string> words;
+	    cout << queries[i] << endl;
 	    for(int j = 0; j < queries[i].length(); j++) {
 	        if(queries[i][j] != ' ') 
 	        word += queries[i][j];
@@ -77,7 +69,14 @@ int main() {
 	            word = "";
 	        }
 	    }
-	    ans[i].push_back(compute(words, Map));
+	    for(int j = 0; j < words.size(); j++) {
+            cout << words[j] << " ";
+        }
+        cout << endl;
+	    vector<int> temp = compute(words, Map);
+	    for(int j = 0; j < temp.size(); j++) {
+	         ans[i].push_back(temp[j]);
+	    }
 	}
 	for(int i = 0; i < ans.size(); i++) {
 	    for(int j = 0; j < ans[i].size(); j++) {
