@@ -2,10 +2,6 @@
 using namespace std;
 
 vector<int> compute(vector<string> &words, map<string, vector<int>> &Map) {
-    for(int i = 0; i < words.size(); i++) {
-        cout << words[i] << " ";
-    }
-    cout << endl;
     vector<int> Set1(Map[words[0]].begin(), Map[words[0]].end());
     for(int i = 1; i < words.size(); i++) {
         vector<int> Set2(Map[words[i]].begin(), Map[words[i]].end());
@@ -49,18 +45,15 @@ int main() {
 	int q;
 	cin >> q;
 	vector<vector<int>> ans(q, vector<int>());
-	string queries[n];
+	string queries[q];
 	getline(cin, queries[0]);
 	for(int i = 0; i < q; i++) {
 	    getline(cin, queries[i]);
-	    cout << queries[i] << endl;
 	}
 	for(int i = 0; i < q; i++) {
-	    cout << queries[i] << endl;
 	    queries[i] += " ";
 	    string word = "";
 	    vector<string> words;
-	    cout << queries[i] << endl;
 	    for(int j = 0; j < queries[i].length(); j++) {
 	        if(queries[i][j] != ' ') 
 	        word += queries[i][j];
@@ -69,10 +62,6 @@ int main() {
 	            word = "";
 	        }
 	    }
-	    for(int j = 0; j < words.size(); j++) {
-            cout << words[j] << " ";
-        }
-        cout << endl;
 	    vector<int> temp = compute(words, Map);
 	    for(int j = 0; j < temp.size(); j++) {
 	         ans[i].push_back(temp[j]);
