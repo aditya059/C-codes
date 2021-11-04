@@ -1,0 +1,44 @@
+class Solution
+{
+	public:
+	void dfs(int curr, vector<int> adj[], stack<int> &Stack, vector<bool> &visited) {
+	    visited[curr] = true;
+	    for(int next: adj[curr]) {
+	        if(visited[next] == false) {
+	            dfs(next, adj, Stack, visited);
+	        }
+	    }
+	    Stack.push(curr);
+	}
+	
+	//Function to find number of strongly connected components in the graph.
+    int kosaraju(int V, vector<int> adj[])
+    {
+        //code here
+        vector<bool> visited(V, false);
+        stack<int> Stack;
+        stack<int> Stack1;
+        for(int i = 0; i < V; i++) {
+            if(visited[i] == false) 
+            dfs(i, adj, Stack, visited);
+        }
+        vector<int> reverseAdj[V];
+        for(int i = 0; i < V; i++) {
+            for(int next: adj[i]) {
+                reverseAdj[next].push_back(i);
+            }
+        }
+        fill(visited.begin(), visited.end(), false);
+        int count = 0;
+        while(!Stack.empty()) {
+            int curr = Stack.top();
+            Stack.pop();
+           // cout << curr << endl;
+            if(visited[curr] == false) {
+                count++;
+                dfs(curr, reverseAdj, Stack1, visited);
+            }
+        }
+        return count;
+    }
+};
