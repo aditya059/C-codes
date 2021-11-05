@@ -8,10 +8,8 @@ public:
             this -> profit = profit;
         }
     } job;
-    static bool comp(job A, job B) {
-        if(A.end < B.end) return true;
-        if(A.end == B.end && A.profit < B.profit) return true;
-        return false;
+    static bool comp(const job &A, const job &B) {
+        return A.end < B.end;
     }
     int binary_search(vector<job> &Jobs, int n, int item) {
         int low = 0;
@@ -40,10 +38,11 @@ public:
         vector<int> DP(n);
         DP[0] = Jobs[0].profit;
         for(int i = 1; i < n; i++) {
+            int include = Jobs[i].profit;
             int index = binary_search(Jobs, i - 1, Jobs[i].start);
-            DP[i] = max(DP[i - 1], Jobs[i].profit);
             if(index != -1)
-            DP[i] = max(DP[i], Jobs[i].profit + DP[index]);
+            include += DP[index];
+            DP[i] = max(DP[i - 1], include);
         }
         return DP[n - 1];
     }
