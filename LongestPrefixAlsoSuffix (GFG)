@@ -1,0 +1,17 @@
+class Solution{
+  public:		
+	int lps(string s) {
+	    // Your code goes here
+	    int n = s.length();
+	    vector<int> piTable(n, 0);
+	    for(int i = 1; i < n; i++) {
+	        int j = piTable[i - 1];
+	        while(j > 0 && s[i] != s[j])
+	        j = piTable[j - 1];
+	        if(s[i] == s[j])
+	        j++;
+	        piTable[i] = j;
+	    }
+	    return piTable[n - 1];
+	}
+};
