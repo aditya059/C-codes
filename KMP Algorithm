@@ -41,7 +41,7 @@ int main() {
 	    }
 	    if(j == pattern.length()) {
 	        cout << i - j << endl;
-	        j = lps[j - 1];     // To print only 1 occurence break here
+	        j = lps[j - 1];     // To print only 1 occurence replace this line with break
 	    }
 	}
 	return 0;
