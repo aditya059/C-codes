@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const double eps = 1e-6;
+
+typedef struct line {
+    int a, b, c;
+    line(int a, int b, int c) {
+        this -> a = a;
+        this -> b = b;
+        this -> c = c;
+    }
+} line;
+
+typedef struct point {
+    int x, y;
+    point(int x, int y) {
+        this -> x = x;
+        this -> y = y;
+    }
+} point;
+
+double distance(double x, double y, point p) {
+    return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2));
+}
+
+double compute(vector<point> &Points, line l, double mid) {
+    double total = 0;
+    double x = mid;
+    double y = (-l.a * x - l.c) / l.b;
+    for(int i = 0; i < Points.size(); i++) {
+        total += distance(x, y, Points[i]);
+    }
+    return total;
+}
+
+int main() {
+    int a, b, c, n, x, y;
+    cin >> a >> b >> c;
+    line l (a, b, c);
+    
+    cin >> n;
+    vector<point> Points;
+    for(int i = 0; i < n; i++) {
+        cin >> x >> y;
+        Points.push_back(point(x, y));
+    }
+    
+    double low = -1e9;
+    double high = 1e9;
+    while((high - low) > eps) {
+        double mid1 = low + (high - low) / 3;
+        double mid2 = high - (high - low) / 3;
+        
+        double dist1 = compute(Points, l, mid1);
+        double dist2 = compute(Points, l, mid2);
+        
+        if(dist1 < dist2)
+        high = mid2;
+        else
+        low = mid1;
+        
+    }
+    
+    cout << (compute(Points, l, low) + compute(Points, l, high)) / 2 << endl;
+    
+    return 0;
+}
