@@ -1,0 +1,22 @@
+void place(stack<int> &s, int x) {
+    if(s.empty() || x >= s.top()) {
+        s.push(x);
+        return;
+    }
+    int y = s.top();
+    s.pop();
+    place(s, x);
+    s.push(y);
+}
+
+/* The below method sorts the stack s 
+you are required to complete the below method */
+void SortedStack :: sort()
+{
+   //Your code here
+   if(s.empty()) return;
+   int x = s.top();
+   s.pop();
+   sort();
+   place(s, x);
+}
