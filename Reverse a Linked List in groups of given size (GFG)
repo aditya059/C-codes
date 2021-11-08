@@ -1,0 +1,18 @@
+struct node *reverse (struct node *head, int k)
+    { 
+        // Complete this method
+        // Complete this method
+        if(head == nullptr)
+        return head;
+        struct node *p = head, *q = nullptr, *r;
+        int c = 1;
+        while(p && c <= k) {
+            r = q;
+            q = p; 
+            p = p -> next;
+            q -> next = r;
+            c++;
+        }
+        head -> next = reverse(p, k);
+        return q;
+    }
