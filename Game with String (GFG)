@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int minValue(string s, int k){
+        // code here
+        map<char, int> Map;
+        for(int i = 0; i < s.length(); i++) {
+            Map[s[i]]++;
+        }
+        multiset<int> Set;
+        for(auto it: Map) {
+            Set.insert(it.second);
+        }
+        while(k--) {
+            int x = *Set.rbegin();
+            auto it = Set.end();
+            --it;
+            Set.erase(it);
+            x--;
+            Set.insert(x);
+        }
+        int sum = 0;
+        while(!Set.empty()) {
+            int x = *Set.begin();
+            sum += x * x;
+            Set.erase(Set.begin());
+        }
+        return sum;
+    }
+};
