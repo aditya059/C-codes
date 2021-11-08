@@ -1,0 +1,16 @@
+class Solution{
+  public:
+    pair<int, int> compute(Node *root) {
+        if(root == nullptr) return {0, 0};
+        pair<int, int> A = compute(root -> left);
+        pair<int, int> B = compute(root -> right);
+        return {root -> data + A.second + B.second, max(A.first, A.second) + max(B.first, B.second)};
+    }
+    //Function to return the maximum sum of non-adjacent nodes.
+    int getMaxSum(Node *root) 
+    {
+        // Add your code here
+        pair<int, int> A = compute(root);
+        return max(A.first, A.second);
+    }
+};
