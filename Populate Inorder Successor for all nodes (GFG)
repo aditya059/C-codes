@@ -1,0 +1,15 @@
+class Solution
+{
+public:
+
+    void populateNext(Node *root)
+    {
+        //code here
+        if(root == nullptr) return;
+        static Node* prev = nullptr;
+        populateNext(root -> left);
+        if(prev) prev -> next = root;
+        prev = root;
+        populateNext(root -> right);
+    }
+};
