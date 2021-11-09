@@ -1,0 +1,20 @@
+pair<int, int> compute(Node* root, bool &ans) {
+    if(root == nullptr) {
+        return {INT_MAX, INT_MIN};
+    }
+    pair<int, int> a = compute(root -> left, ans);
+    pair<int, int> b = compute(root -> right, ans);
+    if(root -> data <= a.second || root -> data >= b.first) {
+        ans = false;
+    }
+    return {min(a.first, root -> data), max(b.second, root -> data)};
+}
+
+//Function to check whether a Binary Tree is BST or not.
+bool isBST(Node* root) 
+{
+    // Your code here
+    bool ans = true;
+    compute(root, ans);
+    return ans;
+}
