@@ -1,0 +1,21 @@
+void count(Node *root, int &l, int &h, int &ans) {
+    if(root == nullptr) return;
+    if(root -> data >= l && root -> data <= h) {
+        ans++;
+        count(root -> left, l, h, ans);
+        count(root -> right, l, h, ans); 
+    }
+    else if(root -> data < l) 
+    count(root -> right, l, h, ans); 
+    else
+    count(root -> left, l, h, ans);
+}
+
+//Function to count number of nodes in BST that lie in the given range.
+int getCount(Node *root, int l, int h)
+{
+    // your code goes here   
+    int ans = 0;
+    count(root, l, h, ans);
+    return ans;
+}
