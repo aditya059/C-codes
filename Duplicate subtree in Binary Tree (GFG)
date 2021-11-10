@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    string preorder(Node *root,  map<string, int> &Map, int &ans) {
+        if(root == nullptr) {
+            return "N";
+        }
+        string leftTree = preorder(root -> left, Map, ans);
+        string rightTree = preorder(root -> right, Map, ans);
+        string str = char('A' + root -> data - 1) + leftTree + rightTree;
+        if(str.size() > 3 && Map[str] != 0) {
+            ans = 1;
+        }
+        Map[str] = 1;
+        return str;
+    }
+    /*This function returns true if the tree contains 
+    a duplicate subtree of size 2 or more else returns false*/
+    int dupSub(Node *root) {
+         // code here
+         int ans = 0;
+         map<string, int> Map;
+         preorder(root, Map, ans);
+         return ans;
+    }
+};
