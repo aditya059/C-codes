@@ -1,0 +1,23 @@
+string preorder(Node* root, map<string, Node*> &Map, vector<Node*> &ans, set<string> &Set) {
+    if(root == nullptr) return "N";
+    string leftS = preorder(root -> left, Map, ans, Set);
+    string rightS = preorder(root -> right, Map, ans, Set);
+    string str = to_string(root -> data) + " " + leftS + " " + rightS;
+    if(Map[str] != nullptr && Set.find(str) == Set.end()) {
+        //cout << "1000 " << str << endl;
+        Set.insert(str);
+        ans.push_back(Map[str]);
+    }
+    Map[str] = root;
+    return str;
+}
+
+vector<Node*> printAllDups(Node* root)
+{
+    // Code here
+    set<string> Set;
+    vector<Node*> ans;
+    map<string, Node*> Map;
+    preorder(root, Map, ans, Set);
+    return ans;
+}
