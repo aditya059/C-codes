@@ -1,0 +1,39 @@
+struct node *partition(struct node *head, struct node *tail) {
+    struct node *j = head;
+    while(head != tail) {
+        if(head -> data < tail -> data) {
+            swap(j -> data, head -> data);
+            j = j -> next;
+        }
+        head = head -> next;
+    }
+    swap(j -> data, tail -> data);
+    return j;
+}
+
+void solve(struct node *head, struct node *tail) {
+    if(head == tail) return;
+    struct node *p = partition(head, tail);
+    struct node *k = head;
+    if(p == head) {
+        solve(p -> next, tail);
+    }
+    else {
+        struct node *j = head;
+        while(j -> next != p) j = j -> next;
+        if(p == tail) solve(head, j);
+        else {
+            solve(head, j);
+            solve(p -> next, tail);
+        }
+    }
+}
+
+//you have to complete this function
+void quickSort(struct node **headRef) {
+    struct node *tail = *headRef;
+    while(tail -> next != nullptr) {
+        tail = tail -> next;
+    }
+    solve(*headRef, tail);
+}
