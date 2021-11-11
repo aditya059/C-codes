@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class TreeNode {
+    public:
+    int data;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int data) {
+        this -> data = data;
+        this -> left = nullptr;
+        this -> right = nullptr;
+    }
+};
+
+void inorder(TreeNode *root, TreeNode *&head) {
+    if(root == nullptr) return;
+    static TreeNode *prev = nullptr;
+    inorder(root -> left, head);
+    if(head == nullptr) 
+    head = root;
+    else {
+        prev -> right = root;
+        prev -> left = nullptr;
+    }
+    prev = root;
+    inorder(root -> right, head);
+}
+
+int main() {
+	// your code goes here
+	//      5 
+    //    /   \ 
+    //   3     7 
+    //  / \   / \ 
+    // 2   4 6   8
+    TreeNode *root = new TreeNode(5);
+    root -> left = new TreeNode(3);
+    root -> right = new TreeNode(7);
+    root -> left -> left = new TreeNode(2);
+    root -> left -> right = new TreeNode(4);
+    root -> right -> left = new TreeNode(6);
+    root -> right -> right = new TreeNode(8);
+    TreeNode *head = nullptr;
+    inorder(root, head);
+    while(head != nullptr) {
+        cout << head -> data << " ";
+        head = head -> right;
+    }
+	return 0;
+}
