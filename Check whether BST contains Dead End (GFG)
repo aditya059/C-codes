@@ -1,0 +1,15 @@
+
+bool compute(Node *root, int min, int max) {
+    if(root == nullptr) return false;
+    if(min == max) return true;
+    return compute(root -> left, min, root -> data - 1) || compute(root -> right, root -> data + 1, max);
+}
+
+/*You are required to complete below method */
+bool isDeadEnd(Node *root)
+{
+    //Your code here
+    bool ans;
+    ans = compute(root, 1, INT_MAX);
+    return ans;
+}
