@@ -1,0 +1,22 @@
+void solve(int pre[], int size, Node* root, int &pos, int min, int max) {
+    if(pos == size) return;
+    if(pre[pos] >= min && pre[pos] <= root -> data - 1) {
+        root -> left = newNode(pre[pos++]);
+        solve(pre, size, root -> left, pos, min, root -> data - 1);
+    }
+    if(pos == size) return;
+    if(pre[pos] >= root -> data + 1 && pre[pos] <= max) {
+        root -> right = newNode(pre[pos++]);
+        solve(pre, size, root -> right, pos, root -> data + 1, max);
+    }
+} 
+
+//Function that constructs BST from its preorder traversal.
+Node* post_order(int pre[], int size)
+{
+    //code here
+    Node *root = newNode(pre[0]);
+    int pos = 1;
+    solve(pre, size, root, pos, INT_MIN, INT_MAX);
+    return root;
+}
