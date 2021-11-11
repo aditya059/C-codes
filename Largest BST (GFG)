@@ -1,0 +1,32 @@
+class node {
+    public:
+    int Min, Max, Size;
+    node(int Min, int Max, int Size) {
+        this -> Min = Min;
+        this -> Max = Max;
+        this -> Size = Size;
+    }
+};
+
+class Solution{
+    public:
+    node compute(Node *root) {
+        if(root == nullptr) return node(INT_MAX, INT_MIN, 0);
+        node Left = compute(root -> left);
+        node Right = compute(root -> right);
+        if(root -> data > Left.Max && root -> data < Right.Min) {
+            return node(min(root -> data, Left.Min), max(root -> data, Right.Max), Left.Size + Right.Size + 1);
+        }
+        else {
+            return node(INT_MIN, INT_MAX, max(Left.Size, Right.Size));
+        }
+    }
+    /*You are required to complete this method */
+    // Return the size of the largest sub-tree which is also a BST
+    int largestBst(Node *root)
+    {
+    	//Your code here
+    	node ans = compute(root);
+    	return ans.Size;
+    }
+};
