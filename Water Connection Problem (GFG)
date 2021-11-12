@@ -1,0 +1,39 @@
+void dfs(int u, vector<bool> &visited, vector<pair<int, int>> adj[], vector<int> &temp) {
+        visited[u] = true;
+        if(adj[u].size() == 0) {
+            temp[1] = u;
+            return;
+        }
+        int v = adj[u][0].first;
+        int e = adj[u][0].second;
+        temp[2] = min(temp[2], e);
+        if(visited[v] == false)
+            dfs(v, visited, adj, temp);
+    }
+    
+    vector<vector<int>> solve(int n,int p,vector<int> a,vector<int> b,vector<int> d)
+    {
+        // code here
+        vector<vector<int>> ans;
+        vector<pair<int, int>> adj[n + 1];
+        vector<int> no_incoming(n + 1, false);
+        for(int i = 0; i < p; i++) {
+            int u = a[i];
+            int v = b[i];
+            int e = d[i];
+            adj[u].push_back({v, e});
+            no_incoming[v] = true;
+        }
+        vector<bool> visited(n + 1, false);
+        for(int i = 1; i <= n; i++) {
+            if(visited[i] == false && no_incoming[i] == false) {
+                vector<int> temp(3);
+                temp[0] = i;
+                temp[2] = INT_MAX;
+                dfs(i, visited, adj, temp);
+                if(temp[0] != temp[1])
+                ans.push_back(temp);
+            }
+        }
+        return ans;
+    }
