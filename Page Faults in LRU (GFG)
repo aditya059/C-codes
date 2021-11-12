@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int pageFaults(int N, int C, int pages[]){
+        // code here
+        int fault = 0;
+        list<int> List;
+        unordered_map<int, list<int>::iterator> Map;
+        for(int i = 0; i < N; i++) {
+            if(Map.find(pages[i]) != Map.end()) {
+                List.erase(Map[pages[i]]);
+                List.push_back(pages[i]);
+                auto iter = List.end();
+                Map.insert({pages[i], --iter});
+            }
+            else {
+                fault++;
+                if(List.size() == C) {
+                    Map.erase(List.front());
+                    List.pop_front();
+                } 
+                List.push_back(pages[i]);
+                auto iter = List.end();
+                Map.insert({pages[i], --iter});
+            }
+        }
+        return fault;
+    }
+};
