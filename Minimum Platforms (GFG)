@@ -1,3 +1,4 @@
+// O(nlogn) Approach
 int findPlatform(int arr[], int dep[], int n)
 {
   // Your code here
@@ -14,4 +15,18 @@ int findPlatform(int arr[], int dep[], int n)
       ans = max(ans, count);
   }
   return ans;
+}
+
+// O(n) Approach
+int findPlatform(int arr[], int dep[], int n)
+{
+  // Your code here
+  vector<int> Set(2400, 0);
+  int ans = 0;
+  for(int i = 0; i < n; i++) {
+      Set[arr[i]]++;
+      Set[dep[i] + 1]--;
+  }
+  partial_sum(Set.begin(), Set.end(), Set.begin());
+  return *max_element(Set.begin(), Set.end());
 }
