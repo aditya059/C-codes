@@ -1,0 +1,16 @@
+string smallestNumber(int S, int D){
+        // code here
+        if(S > 9 * D) return to_string(-1);
+        int DP[D] = {0};
+        DP[D - 1] = 1;
+        S -= 1;
+        for(int i = 0; i < D; i++) {
+            DP[i] += min(9, S);
+            S -= min(9, S);
+        }
+        string str = "";
+        for(int i = 0; i < D; i++) {
+            str = to_string(DP[i]) + str;
+        }
+        return str;
+    }
