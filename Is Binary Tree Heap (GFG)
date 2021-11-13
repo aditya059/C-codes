@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    bool isHeap(struct Node* root) {
+        // code here
+        bool end = false;
+        queue<Node*> Queue;
+        Queue.push(root);
+        while(!Queue.empty()) {
+            struct Node* temp = Queue.front();
+            Queue.pop();
+            if(temp == nullptr) 
+                end = true;
+            else {
+                if(end == true) 
+                return false;
+                int c = temp -> left? temp -> left -> data: INT_MIN;
+                int d = temp -> right? temp -> right -> data: INT_MIN;
+                if(root -> data >= c && root -> data >= d) {
+                    Queue.push(temp -> left);
+                    Queue.push(temp -> right);
+                }
+                else
+                return false;
+            }
+        }
+        return true;
+    }
+};
