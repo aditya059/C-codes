@@ -65,3 +65,46 @@ int getMin(stack<int>& s){
     minimum(s, ans);
     return ans;
 }
+
+//----------------------------------------------------
+// GetMin in O(1) time and O(1) space
+int Min = 1e9;
+void push(stack<int>& s, int a){
+	// Your code goes here
+	if(s.empty()) {
+	    Min = 1e9;
+	    s.push(a);
+	}
+	else if(a >= Min)
+	s.push(a);
+	else 
+	s.push(a - (Min - a));
+	Min = min(Min, a);
+}
+
+bool isFull(stack<int>& s,int n){
+	// Your code goes here
+	return s.size() == n;
+}
+
+bool isEmpty(stack<int>& s){
+	// Your code goes here
+	return s.size() == 0;
+}
+
+int pop(stack<int>& s){
+	// Your code goes here
+	int x = s.top();
+	s.pop();
+	if(x < Min) {
+	    int temp = Min;
+	    Min = 2 * Min - x;
+	    x = temp;
+	}
+	return x;
+}
+
+int getMin(stack<int>& s){
+	// Your code goes here
+	return Min;
+}
