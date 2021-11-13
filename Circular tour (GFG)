@@ -1,0 +1,22 @@
+class Solution{
+  public:
+  
+    //Function to find starting point where the truck can start to get through
+    //the complete circle without exhausting its petrol in between.
+    int tour(petrolPump p[],int n)
+    {
+       //Your code here
+        int front = 0, rear = 0;
+        int balance = 0;
+        while(rear < 2 * n) {
+            balance += p[rear % n].petrol - p[rear % n].distance;
+            if(balance >= 0 && (rear + 1) % n == front) return front;
+            if(balance < 0) {
+                front = rear + 1;
+                balance = 0;
+            }
+            rear++;
+        }
+        return -1;
+    }
+};
