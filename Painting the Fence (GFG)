@@ -1,0 +1,14 @@
+const int MOD = 1e9 + 7;
+long long countWays(int n, int k){
+    // code here
+    long long same = 0;
+    long long diff = k;
+    long long total = k;
+    if(n == 1) return total;
+    for(int i = 2; i <= n; i++) {
+        same = diff % MOD;
+        diff = (total * (k - 1)) % MOD;
+        total = (same + diff) % MOD;
+    }
+    return (total + MOD) % MOD;
+}
