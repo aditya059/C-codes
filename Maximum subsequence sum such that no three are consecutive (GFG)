@@ -1,0 +1,15 @@
+int maxSum(vector<int> &arr, int n) 
+{
+	// Write your code here.
+    vector<int> DP(n);
+    DP[0] = arr[0];
+    if(n == 1) return DP[0];
+    DP[1] = arr[0] + arr[1];
+    if(n == 2) return DP[1];
+    DP[2] = max(max(DP[1], arr[2] + arr[0]), arr[1] + arr[2]);
+    if(n == 3) return DP[2];
+    for(int i = 3; i < n; i++) {
+        DP[i] = max(max(DP[i - 1], DP[i - 2] + arr[i]), DP[i - 3] + arr[i - 1] + arr[i]);
+    }
+    return DP[n - 1];
+}
