@@ -1,4 +1,5 @@
 // TC = O(n * k * k)
+// n eggs, k floors
 int compute(int n, int k, vector<vector<int>> &DP) {
     if(n == 1 || k == 1 || k == 0) return k;
     if(DP[n][k] != -1) return DP[n][k];
