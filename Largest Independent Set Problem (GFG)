@@ -1,0 +1,14 @@
+pair<int, int> compute(Node *root) {
+    if(root == nullptr) return {0, 0};
+    pair<int, int> l = compute(root -> left);
+    pair<int, int> r = compute(root -> right);
+    pair<int, int> curr = {1 + l.second + r.second, max(l.first, l.second) + max(r.first, r.second)};
+    return curr;
+}
+
+int LISS(Node *root)
+{
+    //Code here
+    pair<int, int> ans = compute(root);
+    return max(ans.first, ans.second);
+}
