@@ -1,0 +1,16 @@
+// TC = O(k * (N ^ 2))
+int maxProfit(int K, int N, int A[]) {
+    // code here
+    vector<vector<int>> DP(K + 1, vector<int>(N + 1, 0));
+    for(int k = 1; k <= K; k++) {
+        for(int i = 1; i < N; i++) {
+            DP[k][i + 1] = max(DP[k - 1][i + 1], DP[k][i]);
+            int mx = INT_MIN;
+            for(int j = i - 1; j >= 0; j--) {
+                mx = max(mx, A[i] - A[j] + DP[k - 1][j]);
+            }
+            DP[k][i + 1] = max(mx, DP[k][i + 1]);
+        }
+    }
+    return DP[K][N];
+}
