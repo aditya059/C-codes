@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxProfit(int K, vector<int>& A) {
+        int N = A.size();
+        if(N == 0) return 0;
+        vector<vector<int>> DP(K + 1, vector<int>(N, 0));
+        for(int k = 1; k <= K; k++) {
+            int mx = -A[0];
+            for(int i = 1; i < N; i++) {
+                DP[k][i] = max(DP[k - 1][i], DP[k][i - 1]);
+                DP[k][i] = max(DP[k][i], A[i] + mx);
+                mx = max(mx, -A[i] + DP[k - 1][i - 1]);
+            }
+        }
+        return DP[K][N - 1];
+    }
+};
