@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void computeTable(vector<int> &arr, vector<vector<int>> &sparseTable) {
+    int N = arr.size();
+    int logN = log2(N) + 1;
+    for(int j = 0; j < logN; j++) {
+	    for(int i = 0; i + (1 << j) - 1 < N; i++) {
+	        if(j != 0)
+	        sparseTable[i][j] = min(sparseTable[i][j - 1], sparseTable[i + (1 << (j - 1))][j - 1]);
+	        else
+	        sparseTable[i][j] = arr[i];
+	    }
+	}
+}
+
+int query(vector<vector<int>> &sparseTable, int L, int R) {
+    int len = log2(R - L + 1);
+    return min(sparseTable[L][len], sparseTable[R - (1 << len) + 1][len]);
+}
+
+int main() {
+	// your code goes here
+	int N, Q, L, R;
+	cin >> N;
+	vector<int> arr(N);
+	int logN = log2(N) + 1;
+	for(int i = 0; i < N; i++) {
+	    cin >> arr[i];
+	}
+	vector<vector<int>> sparseTable(N, vector<int>(logN));
+	computeTable(arr, sparseTable);
+	cin >> Q;
+	while(Q--) {
+	    cin >> L >> R;
+	    cout << query(sparseTable, L, R) << endl;
+	}
+	return 0;
+}
