@@ -1,0 +1,29 @@
+class TreeAncestor {
+public:
+    vector<vector<int>> ancestor;
+    TreeAncestor(int n, vector<int>& parent) {
+        int logN = log2(n) + 1;
+        ancestor.resize(n, vector<int>(logN, -1));
+        for(int j = 0; j < logN; j++) {
+            for(int i = 1; i < n; i++) {
+                if(j != 0) {
+                    if(ancestor[i][j - 1] != -1)
+                    ancestor[i][j] = ancestor[ancestor[i][j - 1]][j - 1];
+                }
+                else
+                ancestor[i][j] = parent[i];
+            }
+        }
+    }
+    
+    int getKthAncestor(int node, int k) {
+        int answer = node;
+        for(int i = log2(k); i >= 0; i--) {
+            if(k & (1 << i)) {
+                answer = ancestor[answer][i];
+                if(answer == -1) return -1;
+            }
+        }
+        return answer;
+    }
+};
