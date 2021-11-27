@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int logN;
+
+void dfs(int u, vector<int> adj[], vector<vector<int>> &ancestor, vector<int> &depth) {
+    for(int v: adj[u]) {
+        ancestor[v][0] = u;
+        depth[v] = depth[u] + 1;
+        for(int j = 1; j < logN; j++) {
+            ancestor[v][j] = ancestor[ancestor[v][j - 1]][j - 1];
+        }
+        dfs(v, adj, ancestor, depth);
+    }
+}
+
+int lca(int u, int v, vector<vector<int>> &ancestor, vector<int> &depth) {
+    if(depth[v] > depth[u]) return lca(v, u, ancestor, depth);
+    
+    int K = depth[u] - depth[v];
+    for(int i = logN; i >= 0; i--) {
+        if(K & (1 << i)) {
+            u = ancestor[u][i];
+        }
+    }
+    if(u == v) return u;
+    for(int i = logN; i >= 0; i--) {
+        if(ancestor[u][i] != ancestor[v][i]) {
+            u = ancestor[u][i];
+            v = ancestor[v][i];
+        }
+    }
+    return ancestor[u][0];
+}
+
+int main() {
+	// your code goes here
+	int N, M, Q, u, v;
+	cin >> N;
+	logN = log2(N) + 1;
+	vector<int> adj[N];
+	vector<int> depth(N, 0);
+	vector<vector<int>> ancestor(N, vector<int>(logN, 0));
+	for(int u = 0; u < N; u++) {
+	    cin >> M;
+	    for(int j = 0; j < M; j++) {
+	        cin >> v;
+	        adj[u].push_back(v);
+	    }
+	}
+	dfs(0, adj, ancestor, depth);
+	cin >> Q;
+	while(Q--) {
+	    cin >> u >> v;
+	    cout << lca(u, v, ancestor, depth) << endl;
+	}
+	return 0;
+}
